@@ -50,6 +50,7 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener, Ac
     
     public ImageIcon getFondo(){        
         return this.fondo;
+
     }
     
                           
@@ -149,7 +150,7 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener, Ac
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Saludos StackOverflow!");
+        
         }
 
 }

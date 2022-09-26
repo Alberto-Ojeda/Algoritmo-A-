@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class TableroGUI extends javax.swing.JPanel implements Runnable{
+public class TableroGUI extends javax.swing.JPanel implements Runnable, ActionListener{
     public ImageIcon agua, tocado, startFinish, caminoWalk, carrito;
     private boolean tipoTablero;
     private CasillasGUI [][] casillas ;
@@ -13,13 +13,14 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
     int termin = 0;
     lista nueva = new lista("Lista de caminos");
     nodo nuevo;
-    
+    private Main main;
     public TableroGUI() {
         initComponents();
     }
 
     //tablero GUI, interfaz inicializa se le da el tamaño y si se muestra  (2)
     public TableroGUI(int size, boolean tipo) {
+    	main.botonGenerar.addActionListener(this);
         initComponents();
         mapita = new mapaMatriz( size );
         x0= (1*35)-5;
@@ -250,5 +251,20 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
         
         termin = 1;
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource()==main.botonGenerar) {
+
+            int [] prueba = new int[2];
+            prueba=retornarcasilla();
+
+    
+            this.pintar(prueba[0],prueba[1]);
+    
+            mapita.setParedes( prueba[1],prueba[0] );/////
+
+	}}
                      
 }
