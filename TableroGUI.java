@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class TableroGUI extends javax.swing.JPanel implements Runnable{
-    private ImageIcon agua, tocado, startFinish, caminoWalk, carrito;
+    public ImageIcon agua, tocado, startFinish, caminoWalk, carrito;
     private boolean tipoTablero;
     private CasillasGUI [][] casillas ;
     mapaMatriz mapita;///////////////
@@ -11,7 +11,7 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
     circulo circuloA;/////////
     int x0,y0,x1=200,y1=65+35;
     int termin = 0;
-    lista nueva = new lista("nuevesita");
+    lista nueva = new lista("Lista de caminos");
     nodo nuevo;
     
     public TableroGUI() {
@@ -41,6 +41,7 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
                 casillas[i][j] = new CasillasGUI(this,mapita);/////////
                 //se carga el fondo (pasto)
                 casillas[i][j].setFondo(agua);
+                //espacio entre casillas
                 x = (i * 35)+1;
                 y = (j * 35)+1;
                 //se da el tamaño de las casillas
@@ -56,10 +57,23 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
     }
     
     //este metodo pintar, rellena la casilla con la pared cuando se clickee con el moyse en la casilla donde se pinche
+    //aqui se agregara el metodo random para establecer las paredes
     public void pintar(int x, int y){
         this.casillas[x][y].setFondo(tocado);
         this.repaint();
     }
+    private static int [] casillaMarcada = new int[2];
+
+    public int[] retornarcasilla() {
+    	int	valor = (int) (Math.random()*10 + 1);
+    	int	valor2 = (int) (Math.random()*10 + 1);
+
+    	casillaMarcada[0]=valor;
+    	casillaMarcada[1]=valor2;
+    	
+    	return	casillaMarcada;
+    	}
+ 
     //se pinta las casillas de inicio y final
     public void pintarStartFinish(int x, int y){
         this.casillas[x][y].setFondo(startFinish);
@@ -84,15 +98,15 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
     }
     
     /////// METODO PARA CARGAR LAS IMAGENES QUE SE UTILIZAN ///////
-    private void cargarImagenes() {
-        this.agua = this.cargarFondo("pasto.gif");
+    public void cargarImagenes() {
+        this.agua = this.cargarFondo("agua.jpg");
         this.tocado = this.cargarFondo("pared.gif");
         this.startFinish = this.cargarFondo("starFinish.gif");
         this.caminoWalk = this.cargarFondo("walk2.gif");
         this.carrito = this.cargarFondo("circleChrome.gif");
     }
     //metodo para cargar la imagen , {protected} solo permite el acceso desde subclase y miembros del mismo paquete
-    protected static ImageIcon cargarFondo( String ruta ){
+    public static ImageIcon cargarFondo( String ruta ){
         java.net.URL localizacion = TableroGUI.class.getResource(ruta);
         if( localizacion != null ) {
             return new ImageIcon( localizacion );
@@ -102,11 +116,15 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
         }
     }
     
+    //trae el punto en el cual se encuentra el objeto en el tablero
     public int[] getCoordenadas( CasillasGUI casilla ){
         int [] coordenadas = new int[2];
+       
         for( int i = 0; i < this.casillas.length; i++ ){
             for( int j = 0; j < this.casillas.length; j++ ){
+            	
                 if( this.casillas[i][j] == casilla ){
+                	
                     coordenadas[0] = i;
                     coordenadas[1] = j;
                 }
@@ -116,18 +134,21 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
     }
     
        
-    public void setCasillas(CasillasGUI[][] casillas) {
+ /* 	Metodo que no se utiliza  
+  * public void setCasillas(CasillasGUI[][] casillas) {
         this.casillas = casillas;
     }
+    */
     
     public boolean isTipoTablero() {
         return tipoTablero;
     }    
-    public void setTipoTablero(boolean tipoTablero) {
+/* Metodo no ocupado pero se podria utilizar para cambiar el estado del tablero  
+ *  public void setTipoTablero(boolean tipoTablero) {
         this.tipoTablero = tipoTablero;
-    }
-                              
-    private void initComponents() {
+    }*/
+//Metodo para iniciar los componentes                              
+    public void initComponents() {
 
         setLayout(null);
         animacion = new Thread(this);//////////////
@@ -135,8 +156,8 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setPreferredSize(new java.awt.Dimension(351, 351));
     }
-    
-    public void paint (Graphics G)
+    //metodo para pintar el objeto
+   public void paint (Graphics G)
     {
         super.paint(G);
         
@@ -144,7 +165,7 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
             circuloA.painter(G,this,0); //se pinta con el paint pero del circulo
         }catch(NullPointerException e){;}
     }
-    
+    //metodo que se implemento al poner runnable
     public void run()
     {
         int j;
@@ -162,8 +183,9 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
         
         
             System.out.println("repeticion1 de "+(((x0+5)/35)-1)+" "+(((y0+5)/35)-1)+" hacia "+(((x1+5)/35)-1)+" "+(((y1+5)/35)-1));
+            //tiempo del objeto cuando va hacia abajo del tablero
             if( ( y0 < y1 ) && ( x0 ==x1 ) ){
-                System.out.println("caso 1");
+                System.out.println("caso 1, Se dirige hacia abajo");
                 for(int w = y0; w < y1; w++){
                     circuloA.x = x0;
                     circuloA.y = w;
@@ -172,9 +194,9 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
                     try {Thread.sleep(10);} catch (InterruptedException e) {;}
                 }
             }
-        
+        // tiempo del objeto va hacia arriba en el tablero
             else if( ( y0 > y1 ) && ( x0 ==x1 ) ){
-                System.out.println("caso 2 ");
+                System.out.println("caso 2, Se dirige hacia arriba ");
                 for(int w = y0; w > y1; w--){
                     circuloA.x = x0;
                     circuloA.y = w;
@@ -183,9 +205,9 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
                     try {Thread.sleep(10);} catch (InterruptedException e) {;}
                 }
             }
-        
+        //Tiempo del objeto cuando va hacia la derecha
             else if( ( y0 == y1 ) && ( x0 < x1 ) ){
-                System.out.println("caso 3");
+                System.out.println("caso 3, Se dirige hacia la derecha");
                 for(int w = x0; w < x1; w++){
                     circuloA.x = w;
                     circuloA.y = y0;
@@ -194,9 +216,9 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
                     try {Thread.sleep(10);} catch (InterruptedException e) {;}
                 }
             }
-        
+            //Tiempo del objeto cuando va hacia la izquierda
             else if( ( y0 == y1 ) && ( x0 > x1 ) ){
-                System.out.println("caso 4");
+                System.out.println("caso 4, Se dirige hacia la izquierda ");
                 for(int w = x0; w > x1; w--){
                     circuloA.x = w;
                     circuloA.y = y0;
@@ -212,11 +234,16 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable{
             aux=aux2;
             aux2=aux2.siguiente;
             if(aux2!=null){
+            	//elemento hacia la izquierda
                 x0 = ( ( aux.cordX +1) *35 )-5;
+
+                //elemento hacia abajo
                 y0 = ( ( aux.cordY +1) *35 )-5;
-            
+                //elemento hacia arriba
                 y1 = ( ( aux2.cordY +1) *35 )-5;
                 x1 = ( ( aux2.cordX +1) *35 )-5;
+                
+                System.out.println("es x0="+x0+" es x1="+ x1+ " es y0="+y0+" es y1"+y1 );
             }
         }//fin while
 

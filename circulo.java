@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.ImageObserver;
 
 public class circulo
@@ -10,13 +11,12 @@ public class circulo
     private Image circle;
     
     
-    
     public circulo( int n, int x, int y )
     {
         this.n = n;
         this.x = x;
         this.y = y;
-        ImageIcon iic = new ImageIcon( "zelda.png" );
+        ImageIcon iic = new ImageIcon( "pez.png" );
         circle = iic.getImage();
     }
     

@@ -50,15 +50,22 @@ public class lista{
     
     ///////METODO QUE BUSCA EN LA LISTA EL NODO CON MENOR COSTO, LO ELIMINA/////
     ///////Y LO REGRESA/////////////////////////////////////////////////////////
+    /*
+     * evalua los nodos y al final elimina el costro menor
+     */
     public nodo eliminaCostoMenor(){
         nodo aux = primero;
         nodo menor = primero;
-
         while ( aux != null ){
-            if( aux.costoF < menor.costoF )
-                menor = aux;
-            else
+            if( aux.costoF < menor.costoF ) {
+          //  	System.out.println("aux costoF="+ aux.costoF  +"aux costro menor=" + menor.costoF);
+            	menor = aux;
+            	}
+            else {
+
                 aux = aux.siguiente;
+
+                }
         }
         
         return eliminar( menor );

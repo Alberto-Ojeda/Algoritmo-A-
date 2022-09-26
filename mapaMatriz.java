@@ -1,3 +1,4 @@
+//se declara la matriz
 public class mapaMatriz{
     int[][] matriz;
     int cordX,cordY;
@@ -8,6 +9,9 @@ public class mapaMatriz{
     lista camino;
     
     ///////CONSTRUCTOR//////////////////////////////////////////////////////////
+    //constructor de la matriz donde declara  las listas que tendran 
+    //los caminos abiertos y los caminos vacios
+    //junto con el tamaño de la matriz
     public mapaMatriz( int tamanio ){
         abierta = new lista( "abierta" );
         cerrados = new lista( "cerrada" );
@@ -25,10 +29,12 @@ public class mapaMatriz{
     ///////METODO PARA ESTABLECER LAS PAREDES EL EL LABERINTO///////////////////
     public void setParedes( int x, int y ){
         this.matriz[x][y] = 1;
+    	System.out.println(this.matriz[x][y] );
+
     }
     
     //////METODO PARA IMPRIMIR LA MATRIZ////////////////////////////////////////
-    public void imprimeMatriz(){
+  /*  public void imprimeMatriz(){
         System.out.println(" ");
         for(int i = 0; i < tamanio; i++){
             for(int j = 0; j < tamanio; j++){
@@ -36,9 +42,13 @@ public class mapaMatriz{
             }
             System.out.println(" ");
         }
-    }
+    }*/
     
     ///////METODO PARA ESTABLECER EL INICIO Y LA META///////////////////////////
+    /*puntoInicio y puntoMeta ambos son nodos y se toman cuando son nulos, 
+     * se le pasa las coordenadas a cada uno de ellos
+     * y se establece el punto de inicio y pùnto final en el tablero 
+     * */
     public int setReferencias( int x, int y ){
         if( puntoInicio == null ){
             puntoInicio = new nodo(x,y);
@@ -56,7 +66,10 @@ public class mapaMatriz{
     }
     
     ///////METODO QUE INICIALIZA LOS VALORES DE LA MATRIZ///////////////////////
+    /* se inicializa la matriz en este punto y se le da el tamaños , con el for se itera en el tamaño
+     * */
     public void inicializaMatriz(){
+    	
         for(int i = 0; i < tamanio; i++){
             for(int j = 0; j < tamanio; j++){
                 matriz[i][j] = 0;
@@ -65,6 +78,10 @@ public class mapaMatriz{
     }
  
     //////METODO QUE EMPIEZA EL ALGORITMO Y REGRESA EL CAMINO FINAL/////////////
+    /* primero == nodo , CAMINO==lista 
+     * Inicia el algoritmo y se declara un nodo extra para pasarle el camino primero
+     * 
+     * */
     public lista getCamino(){
         iniciaAlgoritmo( puntoInicio );
         
@@ -79,13 +96,17 @@ public class mapaMatriz{
         nueva.eliminar( puntoMeta );
         
         return nueva;
-    }///////////////////////////////////////////////////////////////////////////
+    }
+    
     
     ///////METODO QUE REALIZA EL ALGORITMO (EN FORMA GENERAL)///////////////////
+    /* se le pasa el nodo inicial al algoritmo y comienza el algoritmo 
+     * */
     public void iniciaAlgoritmo( nodo inicial ){
+    	//se añade a la lista abierta el nodo inicial ya que al comenzar el camino no esta cerrado 
+    	
         abierta.agregar( inicial );
         nodo actual = abierta.eliminaCostoMenor();
-        
         
         while( !estaEnAbiertos( puntoMeta )){
             nodo extra = actual;
@@ -93,9 +114,18 @@ public class mapaMatriz{
             cerrados.agregar( extra );
 
             //si el actual es igual al destino
-            if( ( ( actual.cordX == puntoMeta.cordX ) && ( actual.cordY == puntoMeta.cordY )  ) )//|| abierta.esVacia() )
+            if( ( ( actual.cordX == puntoMeta.cordX ) && 
+            		( actual.cordY == puntoMeta.cordY )  ) ){		
+            	//|| abierta.esVacia() )
+            	
+                System.out.println("nodo actual cordx= "+actual.cordX);
+	            System.out.println("nodo actual cordx= "+actual.cordY);
+	            System.out.println("nodo puntoMeta cordx= "+puntoMeta.cordX);
+	            System.out.println("nodo puntoMeta cordY= "+puntoMeta.cordY);
+
+            	
                 break;//terminamos
-            
+            }            
             else{
                 //obtengo adyacentes
                 int x = 0, y = 0,w = 0,w2 = 0;
@@ -138,34 +168,7 @@ public class mapaMatriz{
                             ////QUITANDO EL CONTINUE Y DESCOMENTANDO LO DE ABAJO ACEPTAMOS CAMINOS DIAGONALES///////////////////////////
                             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             continue;
-                            /*
-                            if( !(adyacente.cordX-1 < 0) ){// -1 0
-                                extra3 = new nodo( adyacente.cordX-1, adyacente.cordY );
-                                if( ( matriz[adyacente.cordX-1][adyacente.cordY] == 1 ) && distancia( extra3, actual ) ==10 ){
-                                    continue;
-                                }
-                            }
-                            if( !(adyacente.cordX+1 >= tamanio) ){// +1 0
-                                extra3 = new nodo( adyacente.cordX+1, adyacente.cordY );
-                                if( ( matriz[adyacente.cordX+1][adyacente.cordY] == 1 ) && distancia( extra3, actual ) ==10 ){
-                                    continue;
-                                }
-                            }
-                            
-                            if( !(adyacente.cordY+1 >= tamanio) ){// 0 +1
-                                extra3 = new nodo( adyacente.cordX, adyacente.cordY+1 );
-                                if( ( matriz[adyacente.cordX][adyacente.cordY+1] == 1 ) && distancia( extra3, actual ) ==10 ){
-                                    continue;
-                                }
-                            }
-                            
-                            if( !(adyacente.cordY-1 < 0) ){// 0 -1
-                                extra3 = new nodo( adyacente.cordX, adyacente.cordY-1 );
-                                if( ( matriz[adyacente.cordX][adyacente.cordY-1] == 1 ) && distancia( extra3, actual ) ==10 ){
-                                    continue;
-                                }
-                            }
-                             */
+                 
                         }
                         
                         //comprobamos que no este en la abierta ni en la cerrada 

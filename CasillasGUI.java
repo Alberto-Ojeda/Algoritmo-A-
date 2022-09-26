@@ -2,9 +2,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 //se implementa la clase mouseListener y extiende de jpanel heredando todos sus metodos
-public class CasillasGUI extends javax.swing.JPanel implements MouseListener {
+public class CasillasGUI extends javax.swing.JPanel implements MouseListener, ActionListener {
     // se establecen las variables -- el tablero 
     private TableroGUI tablero;
+    
+    
     // imagen de fondo
     private ImageIcon fondo;
     // casilla marcada --> aun revisamos para que funciona, ya que no afecta si se tiene un 2 o algun otro numero  
@@ -13,12 +15,14 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener {
     //private JPopupMenu menuPrincipal;
     //mapaMatriz --> se hace una variable que hereda de la clase
     mapaMatriz mapita;
+    private Main main;
     //no se utilizan
     //JMenuItem itemInicio;
     //JMenuItem itemMeta;
     
     //constructor de la clase
     public CasillasGUI() {        
+
     }
     
     //casillas Gui implementa el tablero, el metodo mapaMatriz que es el algoritmo 
@@ -26,14 +30,22 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener {
     	//implementa la clase mapita
         this.mapita = mapita;
         initComponents();
-        this.tablero = t;
+        this.tablero =  t;
         if(this.tablero.getTipoTablero() == true){// tablero responde a clics?
             this.addMouseListener(this);
+         
+
         }
+    }
+
+    public void prueba() {
+
+    	System.out.println("holi");
     }
     
     public void setFondo(ImageIcon fondo){
         this.fondo = fondo;
+
     }
     
     public ImageIcon getFondo(){        
@@ -42,8 +54,10 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener {
     
                           
     private void initComponents() {
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
+
        /* 
         * estos metodos no se utilizan
         * layout.setHorizontalGroup(
@@ -60,16 +74,20 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage(fondo.getImage(), 0,0,this.getWidth(),this.getHeight(),this);
+
         
     }
   //-------------------------------------------    
     // Al implementar MouseListener se heredan los siguientes metodos
-    public void mouseClicked(MouseEvent e){} //se invoca cuando el boton es presionado (presiona y suelta)
+    public void mouseClicked(MouseEvent e){
+    	
+    } //se invoca cuando el boton es presionado (presiona y suelta)
     public void mouseEntered(MouseEvent e){} // se invoca cuando el ratón entra en un componente
     public void mouseExited(MouseEvent e){}  //se invoca cuando el ratón sale de un componente 
   //-------------------------------------------
     //se utiliza el siguiente ya que se invoca cuando se presiona un boton del  mouse sobre un componente
     public void mousePressed(MouseEvent e){
+
     	//si presiona el click derecho que es 3, entonces se marcara la casilla
         if (e.getButton() == 3) {
             this.setCasillaMarcada(tablero.getCoordenadas((CasillasGUI)e.getComponent()));
@@ -92,12 +110,31 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener {
                 this.tablero.pintaCarrito();
             }
         }
+     
         else{
+
+            int [] prueba = new int[2];
+            prueba=retornarcasilla();
+
             this.setCasillaMarcada(tablero.getCoordenadas((CasillasGUI)e.getComponent()));
-            this.tablero.pintar(this.getCasillaMarcada()[0],this.getCasillaMarcada()[1]);
-            mapita.setParedes( this.getCasillaMarcada()[1], this.getCasillaMarcada()[0] );/////
+      //      System.out.println(tablero.getCoordenadas((CasillasGUI)e.getComponent()));
+    //pinta las casillas
+            this.tablero.pintar(prueba[0],prueba[1]);
+     //declara los obstaculos
+            mapita.setParedes( prueba[1],prueba[0] );/////
+            System.out.println(this.getCasillaMarcada()[1]+ " "+ this.getCasillaMarcada()[0] );
         }
+        
     }
+    public int[] retornarcasilla() {
+    	int	valor = (int) (Math.random()*10 + 1);
+    	int	valor2 = (int) (Math.random()*10 + 1);
+
+    	casillaMarcada[0]=valor;
+    	casillaMarcada[1]=valor2;
+    	
+    	return	casillaMarcada;
+    	}
     public void mouseReleased(MouseEvent e){}
     
     public static int[] getCasillaMarcada() {
@@ -105,6 +142,14 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener {
     }
     public static void setCasillaMarcada(int[] aCasillaMarcada) {
         casillaMarcada = aCasillaMarcada;
-    }                  
+    }
+   
     
+
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JOptionPane.showMessageDialog(null, "Saludos StackOverflow!");
+        }
+
 }
