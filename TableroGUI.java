@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Iterator;
+
 import javax.swing.*;
 
 public class TableroGUI extends javax.swing.JPanel implements Runnable, ActionListener{
@@ -13,14 +15,16 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable, ActionLi
     int termin = 0;
     lista nueva = new lista("Lista de caminos");
     nodo nuevo;
-    private Main main;
+    public Main main;
     public TableroGUI() {
         initComponents();
     }
 
     //tablero GUI, interfaz inicializa se le da el tamaño y si se muestra  (2)
     public TableroGUI(int size, boolean tipo) {
-    	main.botonGenerar.addActionListener(this);
+    	main.botonGenerar.addActionListener(this);	
+    	main.botonReinicio.addActionListener(this);
+    	
         initComponents();
         mapita = new mapaMatriz( size );
         x0= (1*35)-5;
@@ -66,11 +70,11 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable, ActionLi
     private static int [] casillaMarcada = new int[2];
 
     public int[] retornarcasilla() {
-    	int	valor = (int) (Math.random()*10 + 1);
-    	int	valor2 = (int) (Math.random()*10 + 1);
+    	int	valor = (int) (Math.random()*10 - 3);
+    	int	valor2 = (int) (Math.random()*10 - 3);
 
-    	casillaMarcada[0]=valor;
-    	casillaMarcada[1]=valor2;
+    	casillaMarcada[0]=Math.abs(valor) ;
+    	casillaMarcada[1]=Math.abs(valor2);
     	
     	return	casillaMarcada;
     	}
@@ -256,15 +260,25 @@ public class TableroGUI extends javax.swing.JPanel implements Runnable, ActionLi
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource()==main.botonGenerar) {
-
             int [] prueba = new int[2];
             prueba=retornarcasilla();
+           this.pintar(prueba[0],prueba[1]);
+           mapita.setParedes( prueba[1],prueba[0] );/////
 
-    
-            this.pintar(prueba[0],prueba[1]);
-    
-            mapita.setParedes( prueba[1],prueba[0] );/////
+	} if (e.getSource()==main.botonReinicio) {
+     String   cantidad=JOptionPane.showInputDialog("Introduce tu nombre");
+//   System.out.println(Integer.valueOf(cantidad));
+   
+   for (int i = 0; i < Integer.valueOf(cantidad); i++) {
+       int [] prueba = new int[2];
+       prueba=retornarcasilla();
+      this.pintar(prueba[0],prueba[1]);
+      mapita.setParedes( prueba[1],prueba[0] );/////
+      
 
-	}}
+	
+}
+	}
+		}
                      
 }

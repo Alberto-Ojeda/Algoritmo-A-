@@ -123,7 +123,7 @@ public class mapaMatriz{
 	            System.out.println("nodo puntoMeta cordx= "+puntoMeta.cordX);
 	            System.out.println("nodo puntoMeta cordY= "+puntoMeta.cordY);
 
-            	
+            	 
                 break;//terminamos
             }            
             else{

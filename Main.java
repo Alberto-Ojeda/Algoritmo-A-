@@ -17,6 +17,8 @@ public class Main extends javax.swing.JFrame implements ActionListener {
 	 static JButton botonReinicio = new JButton ("Reinicio");
 	 static JButton botonGenerar = new JButton ("Generar aleatorios");
 	 static JButton botonGenerar2 = new JButton ("Generar aleatorios");
+     JTextField Randomcasilla = new JTextField("holi");
+
      mapaMatriz mapita;
      private static int [] casillaMarcada = new int[2];
      private TableroGUI tablero;
@@ -36,10 +38,9 @@ public class Main extends javax.swing.JFrame implements ActionListener {
     	   botonReinicio.addActionListener(this);
            botonGenerar.addActionListener(this);
            botonGenerar2.addActionListener(this);
-        tableroGUI1 = new TableroGUI( 12, true );
+        tableroGUI1 = new TableroGUI( 8, true );
      
 
-        JTextField Randomcasilla = new JTextField("holi");
 //        this.setLocationRelativeTo( null );
         setDefaultCloseOperation( javax.swing.WindowConstants.EXIT_ON_CLOSE );
         javax.swing.GroupLayout tableroGUI1Layout = new javax.swing.GroupLayout( tableroGUI1 );
@@ -65,9 +66,8 @@ public class Main extends javax.swing.JFrame implements ActionListener {
              
                .addComponent(botonGenerar, 0, 
                		200, 200) 
-                .addComponent(Randomcasilla,0,100,100)
-                .addComponent(tableroGUI1, 408, 
-                		421, 459)
+                .addComponent(tableroGUI1, 0, 
+                		280, 280)
                 
         )
             
@@ -84,9 +84,8 @@ public class Main extends javax.swing.JFrame implements ActionListener {
                 
                 .addComponent(botonGenerar, 0, 
                 		100, 100) 
-                .addComponent(Randomcasilla,0,20,100)
-                .addComponent(tableroGUI1, 408, 
-                		421, 459)
+                .addComponent(tableroGUI1, 0, 
+                		280, 280)
           
         )    
            
@@ -114,7 +113,6 @@ public class Main extends javax.swing.JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		    
-		
 	}   
 	
 	public static ArrayList<Integer> generarAleatoriosNoRepetidos (int cantidad) {

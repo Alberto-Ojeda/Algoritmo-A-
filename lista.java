@@ -73,10 +73,10 @@ public class lista{
 
     ///////METODO QUE MUESTRA LA LISTA//////////////////////////////////////////
     public void muestralista( ){
-        System.out.println("mostrando lista " +nombreLista);
+        System.out.println(nombreLista);
         nodo aux2 = primero;
         while ( aux2 != null ){
-            System.out.println("--> "+aux2.cordX+" "+aux2.cordY+" G:"+aux2.costoG+" H"+aux2.costoH+" F"+aux2.costoF);
+            System.out.println(aux2.cordX+" "+aux2.cordY+" G:"+aux2.costoG+" H"+aux2.costoH+" F"+aux2.costoF);
             aux2 = aux2.siguiente;
         }
         System.out.println(" \n");

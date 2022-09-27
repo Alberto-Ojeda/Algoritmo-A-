@@ -91,7 +91,7 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener, Ac
 
     	//si presiona el click derecho que es 3, entonces se marcara la casilla
         if (e.getButton() == 3) {
-            this.setCasillaMarcada(tablero.getCoordenadas((CasillasGUI)e.getComponent()));
+        	this.setCasillaMarcada(tablero.getCoordenadas((CasillasGUI)e.getComponent()));
             this.tablero.pintarStartFinish(this.getCasillaMarcada()[0],this.getCasillaMarcada()[1]);
             //  si la referencia de inicio es diferente al inicio predeterminado entonces el nodo inicio
             //  se volvera null y se creara o pasara a tener los valores de la nueva referencia  
@@ -114,16 +114,15 @@ public class CasillasGUI extends javax.swing.JPanel implements MouseListener, Ac
      
         else{
 
-            int [] prueba = new int[2];
-            prueba=retornarcasilla();
+         
 
-            this.setCasillaMarcada(tablero.getCoordenadas((CasillasGUI)e.getComponent()));
+        	this.setCasillaMarcada(tablero.getCoordenadas((CasillasGUI)e.getComponent()));
       //      System.out.println(tablero.getCoordenadas((CasillasGUI)e.getComponent()));
     //pinta las casillas
-            this.tablero.pintar(prueba[0],prueba[1]);
-     //declara los obstaculos
-            mapita.setParedes( prueba[1],prueba[0] );/////
-            System.out.println(this.getCasillaMarcada()[1]+ " "+ this.getCasillaMarcada()[0] );
+        	this.tablero.pintar(this.getCasillaMarcada()[0],this.getCasillaMarcada()[1]);
+    //declara los obstaculos
+        	mapita.setParedes( this.getCasillaMarcada()[1], this.getCasillaMarcada()[0] );
+      //      System.out.println(this.getCasillaMarcada()[1]+ " "+ this.getCasillaMarcada()[0] );
         }
         
     }
